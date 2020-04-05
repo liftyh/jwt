@@ -199,7 +199,7 @@ namespace JWT
             var decodedSignature = _urlEncoder.Decode(jwt.Signature);
 
             var header = DecodeHeader<JwtHeader>(parts);
-            var alg = _algFactory.Create(header.Algorithm);
+            var alg = _algFactory.Create(jwt);
 
             var bytesToSign = GetBytes(String.Concat(jwt.Header, ".", jwt.Payload));
 
