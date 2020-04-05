@@ -202,7 +202,7 @@ namespace JWT
             var decodedPayload = GetString(_urlEncoder.Decode(jwt.Payload));
             var decodedSignature = _urlEncoder.Decode(jwt.Signature);
 
-            var header = _jsonSerializer.Deserialize<JwtHeader>(decodedHeader);
+            var header = DecodeHeader<JwtHeader>(parts);
             var alg = _algFactory.Create(header.Algorithm);
 
             var bytesToSign = GetBytes(String.Concat(jwt.Header, ".", jwt.Payload));
@@ -223,6 +223,13 @@ namespace JWT
 
                 _jwtValidator.Validate(decodedPayload, rawSignature, recreatedSignatures);
             }
+        }
+
+        private string DecodeHeader(JwtParts parts)
+        {
+            var decoded = _urlEncoder.Decode(parts.Header);
+            return _jsonSerializer.Deserialize<T>(heade
+            return GetString(decoded);
         }
 
         private static bool AllKeysHaveValues(IReadOnlyCollection<byte[]> keys)
