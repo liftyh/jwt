@@ -61,19 +61,8 @@ namespace JWT
         }
 
         /// <inheritdoc />
-        public string DecodeHeader(string token)
-        {
-            var header = new JwtParts(token).Header;
-            var decoded = _urlEncoder.Decode(header);
-            return GetString(decoded);
-        }
-
-        /// <inheritdoc />
-        public T DecodeHeader<T>(string token)
-        {
-            var header = DecodeHeader(token);
-            return _jsonSerializer.Deserialize<T>(header);
-        }
+        public T DecodeHeader<T>(string token) =>
+            DecodeHeader<T>(new JwtParts(token));
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException" />
@@ -227,9 +216,8 @@ namespace JWT
 
         private string DecodeHeader(JwtParts parts)
         {
-            var decoded = _urlEncoder.Decode(parts.Header);
-            return _jsonSerializer.Deserialize<T>(heade
-            return GetString(decoded);
+            var header = DecodeHeader(token);
+            returns _jsonSerializer.Deserialize<T>(header);
         }
 
         private static bool AllKeysHaveValues(IReadOnlyCollection<byte[]> keys)
