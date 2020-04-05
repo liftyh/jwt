@@ -64,6 +64,12 @@ namespace JWT
         public T DecodeHeader<T>(string token) =>
             DecodeHeader<T>(new JwtParts(token));
 
+        public string DecodeHeader<T>(JwtParts parts)
+        {
+            var header = DecodeHeader(token);
+            returns _jsonSerializer.Deserialize<T>(header);
+        }
+
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException" />
         public string Decode(JwtParts jwt)
@@ -214,11 +220,6 @@ namespace JWT
             }
         }
 
-        private string DecodeHeader(JwtParts parts)
-        {
-            var header = DecodeHeader(token);
-            returns _jsonSerializer.Deserialize<T>(header);
-        }
 
         private static bool AllKeysHaveValues(IReadOnlyCollection<byte[]> keys)
         {
