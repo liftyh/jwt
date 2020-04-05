@@ -61,13 +61,10 @@ namespace JWT
         }
 
         /// <inheritdoc />
-        public T DecodeHeader<T>(string token) =>
-            DecodeHeader<T>(new JwtParts(token));
-
         public string DecodeHeader<T>(JwtParts parts)
         {
-            var header = DecodeHeader(token);
-            returns _jsonSerializer.Deserialize<T>(header);
+            var decoded = _urlEncoder.Decode(parts.Header);
+            return GetString(decoded);
         }
 
         /// <inheritdoc />
