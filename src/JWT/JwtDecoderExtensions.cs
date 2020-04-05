@@ -12,6 +12,10 @@ namespace JWT
     {
         #region DecodeHeader
 
+        /// <inheritdoc />
+        public string DecodeHeader(string token) =>
+            decoder.DecodeHeader<string>(token);
+
         public static IDictionary<string, string> DecodeHeaderToDictionary(this IJwtDecoder decoder, string token) =>
             decoder.DecodeHeader<Dictionary<string, string>>(token);
 
