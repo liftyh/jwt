@@ -61,9 +61,13 @@ namespace JWT
         }
 
         /// <inheritdoc />
-        public string DecodeHeader<T>(JwtParts parts)
+        /// <exception cref="ArgumentNullException" />
+        public string DecodeHeader<T>(JwtParts jwt)
         {
-            var decoded = _urlEncoder.Decode(parts.Header);
+            if (parts is null)
+                throw new ArgumentNullException(nameof(jwt));
+
+            var decoded = _urlEncoder.Decode(jwt.Header);
             return GetString(decoded);
         }
 
